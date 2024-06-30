@@ -128,15 +128,15 @@ void process_input(struct window* wm)
 
     while (scanf("%s %d", command, &num) == 2)
     {
-        if (command == "open")
+        if (strcmp(command, "open") == 0)
         {
             open_w(wm, num);
         }
-        else if (command == "switch")
+        else if (strcmp(command, "switch") == 0)
         {
             switch_w(wm, num);
         }
-        else if (command == "close")
+        else if (strcmp(command, "close") == 0)
         {
             close_w(wm, num);
         }
