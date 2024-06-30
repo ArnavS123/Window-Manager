@@ -104,43 +104,27 @@ void close_w(struct window* wm, int num) {
     free(curr);
 }
 
-void process_file(struct window* wm, const char* filename) {
-    FILE* file = fopen(filename, "r");
-    if (file == NULL) {
-        perror("Error opening file");
-        return;
-    }
-
-    char line[256];
-    while (fgets(line, sizeof(line), file)) {
-        char command[16];
-        int num;
-        if (sscanf(line, "%s %d", command, &num) == 2) {
-            if (strcmp(command, "open") == 0) {
-                open_w(wm, num);
-            } else if (strcmp(command, "switch") == 0) {
-                switch_w(wm, num);
-            } else if (strcmp(command, "close") == 0) {
-                close_w(wm, num);
-            }
-            int top_id = top(wm);
-            if (top_id != -1) {
-                printf("%d\n", top_id);
-            }
+void process_input(struct window* wm) {
+    char command[16];
+    int num;
+    while (scanf("%s %d", command, &num) == 2) {
+        if (strcmp(command, "open") == 0) {
+            open_w(wm, num);
+        } else if (strcmp(command, "switch") == 0) {
+            switch_w(wm, num);
+        } else if (strcmp(command, "close") == 0) {
+            close_w(wm, num);
+        }
+        int top_id = top(wm);
+        if (top_id != -1) {
+            printf("%d\n", top_id);
         }
     }
-
-    fclose(file);
 }
 
-int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        fprintf(stderr, "Usage: %s <info_file>\n", argv[0]);
-        return 1;
-    }
-
+int main() {
     struct window wm = {NULL, NULL};
-    process_file(&wm, argv[1]);
+    process_input(&wm);
 
     return 0;
 }
