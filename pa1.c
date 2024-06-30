@@ -31,14 +31,6 @@ int top(struct window* wm) {
     return wm->head->ID;
 }
 
-void print_windows(struct window* wm) {
-    struct window_manager* curr = wm->head;
-    while (curr != NULL) {
-        printf("Window ID: %d\n", curr->ID);
-        curr = curr->next;
-    }
-}
-
 void open_w(struct window* wm, int num) {
     struct window_manager* new_node = create_node(num);
     if (new_node == NULL) {
